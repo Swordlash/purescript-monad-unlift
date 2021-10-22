@@ -2,11 +2,12 @@ module Effect.Unlift where
 
 import Prelude
 
-import Effect (Effect)
-import Control.Monad.Reader (ReaderT(..), runReaderT)
 import Control.Monad.Identity.Trans (IdentityT(..), runIdentityT)
+import Control.Monad.Reader (ReaderT(..), runReaderT)
+import Effect (Effect)
+import Effect.Class (class MonadEffect)
 
-class Monad m <= MonadUnliftEffect m where
+class MonadEffect m <= MonadUnliftEffect m where
   withRunInEffect :: forall b. ((forall a. m a -> Effect a) -> Effect b) -> m b
 
 instance MonadUnliftEffect Effect where
